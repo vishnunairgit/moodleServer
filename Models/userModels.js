@@ -11,15 +11,14 @@ const userSchema=mongoose.Schema({
     },
     email:{
         type:String,
-        required:true,
-        unique:true
+         required:true,
+        // unique:true
     },
     phonenumber:{
         type:Number,
-        required:true,
-        unique:true
+        // required:true,
+        // unique:true
     },
- 
     role:{
         type:Number,
         required:true,
@@ -34,9 +33,3 @@ const userSchema=mongoose.Schema({
 
 const users=mongoose.model('users',userSchema)
 module.exports=users
-
-// admin-1
-// seller-2
-// buyer-3
-
-// phonenumber

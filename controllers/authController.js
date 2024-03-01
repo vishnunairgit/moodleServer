@@ -1,7 +1,6 @@
 // const { response } = require('../app')
 const { token } = require("morgan");
 const USERS = require("../Models/userModels");
-// password hashing
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 var jwt = require('jsonwebtoken');
@@ -22,7 +21,8 @@ const doSignUp = async (req, res) => {
     const hash = await bcrypt.hash(req.body.password, saltRounds);
 
     // Now we can store the password hash in db.
-    const response = await USERS({
+    const response = await USERS ({
+
       CompanyName: req.body.CompanyName,
       registrationNumber: req.body.registrationNumber,
       email: req.body.email,
@@ -30,8 +30,10 @@ const doSignUp = async (req, res) => {
       password: hash,
       // confirmPassword:req.body.confirmPassword
     }).save();
-
     res.status(200).json({ message: "signUp successful" });
+
+
+    
   } catch (error) {
     console.error("Error during signUp:", error);
     res.status(500).json({ message: "Internal Server Error" });

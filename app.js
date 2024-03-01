@@ -18,8 +18,9 @@ console.log(process.env.JWT_PASSWORD, "-----jwt password-----");
 
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 var authRouter = require('./routes/authRouter');
+var usersRouter = require('./routes/users');
+
 // var adminRouter = require('./routes/adminRouter');
 
 
@@ -50,8 +51,9 @@ app.use(express.static(path.join(__dirname, 'public')));
       // app.use(cors(corsOptions));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/auth', authRouter);
+app.use('/users', usersRouter);
+
 // app.use('/admin', adminRouter);
 
 
