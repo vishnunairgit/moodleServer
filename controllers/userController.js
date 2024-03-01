@@ -1,6 +1,6 @@
 const USER = require('../Models/userModels');
 
-console.log(USER,'----------------USER---------');
+// console.log(USER,'----------------USER---------');
 
 
 const GetUser = async (req, res) => {
