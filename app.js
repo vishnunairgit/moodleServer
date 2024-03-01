@@ -38,6 +38,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+
 //  to remove cors issues 
   // 1 Using Default Options:
     // app.use(cors());

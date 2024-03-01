@@ -7,7 +7,8 @@ const GetUser = async (req, res) => {
   try {
     console.log(req.body,'---req.body---');  // Log the request body
 
-    const sinleUserResult = await USER.findOne({ id: req.body.userId });
+    const sinleUserResult = await USER.findOne({ userId: req.body.userId });
+    console.log(sinleUserResult,'----------sinleUserResult-------------');
     res.status(200).json(sinleUserResult);
       //  console.log(sinlePetResult,'-----------sinlePetResult---------');
   } catch (error) {

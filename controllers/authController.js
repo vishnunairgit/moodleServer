@@ -22,7 +22,7 @@ const doSignUp = async (req, res) => {
 
     // Now we can store the password hash in db.
     const response = await USERS ({
-
+      // userId: req.body.userId,
       CompanyName: req.body.CompanyName,
       registrationNumber: req.body.registrationNumber,
       email: req.body.email,
@@ -31,9 +31,6 @@ const doSignUp = async (req, res) => {
       // confirmPassword:req.body.confirmPassword
     }).save();
     res.status(200).json({ message: "signUp successful" });
-
-
-    
   } catch (error) {
     console.error("Error during signUp:", error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -60,7 +57,7 @@ const doLogin = async (req, res) => {
         // Generating JWT Token
         const token = jwt.sign(
           {
-            userId: user._id,
+            // userId: user._id,
             email: user.email,
             phonenumber: user.phonenumber,
             CompanyName: user.CompanyName,
