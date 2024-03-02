@@ -13,13 +13,13 @@ const dotenv = require('dotenv').config();
 if (dotenv.error) {
   throw dotenv.error
 }
-console.log(process.env.JWT_PASSWORD, "-----jwt password-----");
+// console.log(process.env.JWT_PASSWORD, "-----jwt password-----");
 
 
 
 var indexRouter = require('./routes/index');
-var authRouter = require('./routes/authRouter');
 var usersRouter = require('./routes/users');
+var authRouter = require('./routes/authRouter');
 
 // var adminRouter = require('./routes/adminRouter');
 
@@ -39,23 +39,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 
-//  to remove cors issues 
-  // 1 Using Default Options:
-    // app.use(cors());
-  // 2- Specifying Options in app.use(cors()):
-
-      // const corsOptions ={
-      //   origin:'http://localhost:3000', 
-      //   credentials:true,            //access-control-allow-credentials:true
-      //   optionSuccessStatus:200
-      // }
-      // app.use(cors(corsOptions));
 
 app.use('/', indexRouter);
-app.use('/auth', authRouter);
 app.use('/users', usersRouter);
+app.use('/auth', authRouter);
 
-// app.use('/admin', adminRouter);
 
 
 

@@ -1,5 +1,11 @@
 const mongoose=require ('mongoose')
 const userSchema=mongoose.Schema({
+    userID: {
+         type: String,
+         required:true,
+        
+    
+    },
 
     CompanyName:{
         type:String,
@@ -11,13 +17,12 @@ const userSchema=mongoose.Schema({
     },
     email:{
         type:String,
-         required:true,
+        required:true,
         // unique:true
     },
     phonenumber:{
         type:Number,
-        // required:true,
-        // unique:true
+        required:true,
     },
     role:{
         type:Number,
@@ -28,6 +33,7 @@ const userSchema=mongoose.Schema({
         type:String,
         required:true
     },
+
 })
 
 
