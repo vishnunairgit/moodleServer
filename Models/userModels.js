@@ -3,8 +3,6 @@ const userSchema=mongoose.Schema({
     userID: {
          type: String,
          required:true,
-        
-    
     },
 
     CompanyName:{
@@ -18,7 +16,7 @@ const userSchema=mongoose.Schema({
     email:{
         type:String,
         required:true,
-        // unique:true
+        unique:true
     },
     phonenumber:{
         type:Number,
