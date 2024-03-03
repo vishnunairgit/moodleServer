@@ -1,19 +1,19 @@
 const USERS = require('../Models/userModels');
 
-// console.log(USER,'----------------USER---------');
-
-
 const GetUser = async (req, res) => {
   try {
-    console.log(req.body,'---req.body---');  // Log the request body
+    const email = req.query.email;
 
-    const sinleUserResult = await USERS.findOne({ Id: req.body.email });
-    console.log(sinleUserResult,'----------sinleUserResult-------------');
-    res.status(200).json(sinleUserResult);
-      //  console.log(sinlePetResult,'-----------sinlePetResult---------');
+    const user = await USERS.findOne({ email: email });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.status(200).json(user);
   } catch (error) {
-    console.log(error);
+    console.error('Error fetching user:', error);
+    res.status(500).json({ message: 'Internal server error' });
   }
-}
+};
 
 module.exports = { GetUser };

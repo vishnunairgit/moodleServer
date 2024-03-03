@@ -1,9 +1,9 @@
 const mongoose=require ('mongoose')
 const userSchema=mongoose.Schema({
-    userID: {
-         type: String,
-         required:true,
-    },
+    // userID: {
+    //      type: String,
+    //      required:true,
+    // },
 
     CompanyName:{
         type:String,

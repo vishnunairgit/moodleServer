@@ -4,7 +4,7 @@ const USERS = require("../Models/userModels");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 var jwt = require('jsonwebtoken');
-const { v4: uuidv4 } = require('uuid');
+// const { v4: uuidv4 } = require('uuid');
 
 
 const doSignUp = async (req, res) => {
@@ -20,7 +20,7 @@ const doSignUp = async (req, res) => {
 
     const hash = await bcrypt.hash(req.body.password, saltRounds);
     const response = await USERS.create({
-      userID: uuidv4(), // generate a unique ID
+      // userID: uuidv4(), // generate a unique ID
       CompanyName: req.body.CompanyName,
       registrationNumber: req.body.registrationNumber,
       email: req.body.email,
@@ -47,7 +47,7 @@ const doLogin = async (req, res) => {
       if (isPasswordValid) {
         const token = jwt.sign(
           {
-            // userId: user._id,
+            userId: user._id,
             email: user.email,
             phonenumber: user.phonenumber,
             CompanyName: user.CompanyName,
