@@ -47,7 +47,7 @@ const doLogin = async (req, res) => {
       if (isPasswordValid) {
         const token = jwt.sign(
           {
-            // userID: user._id,
+            // userId: user._id,
             email: user.email,
             phonenumber: user.phonenumber,
             CompanyName: user.CompanyName,
