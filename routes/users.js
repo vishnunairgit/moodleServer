@@ -1,13 +1,16 @@
 var express = require('express');
-const { GetUser } = require('../controllers/userController');
+const { getallJob } = require('../controllers/userController');
+const { userAuth } = require('../middlewares/Authorization');
+
 // const { userAuth } = require('../middlewares/Authorization');
 var router = express.Router();
 
 
 
 
-router.get('/GetUser', GetUser)
-// router.get('/GetUser', userAuth, GetUser)
+router.get('/getallJob', userAuth , getallJob)
+
+// router.get('/addpost',  addpost)
 
 
 module.exports = router;
