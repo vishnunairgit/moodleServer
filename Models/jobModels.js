@@ -43,7 +43,7 @@ const jobSchema = mongoose.Schema({
         required:true,
         default:1,
     },
-    cretedBy:{
+    CreatedBy:{
         type:mongoose.Types.ObjectId,
         ref:'user'
     }

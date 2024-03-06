@@ -9,7 +9,6 @@ const GetUser = async (req, res) => {
       
       const user = await USER.findOne({_id:userId});
 
-  
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
       }
@@ -25,7 +24,7 @@ const GetUser = async (req, res) => {
 const addJobpost = async (req, res) => {
     try {
         const {
-            cretedBy,
+          CreatedBy,
             JobTitle,
             Experience,
             location,
@@ -44,7 +43,7 @@ const addJobpost = async (req, res) => {
 
 
         await JOBS({
-            cretedBy,
+          CreatedBy,
             status,
             JobTitle,
             Experience,
@@ -57,7 +56,7 @@ const addJobpost = async (req, res) => {
             Jobdescription,
         }).save();
 
-        res.status(201).json({ message: 'jon added successful' });
+        res.status(201).json({ message: 'job added successful' });
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: 'Internal Server Error' });
