@@ -1,9 +1,5 @@
 const JOBS = require('../Models/jobModels')
 
-
-
-
-
 const getallJob = async (req, res) =>{
   try {
    const userId = req.userId;

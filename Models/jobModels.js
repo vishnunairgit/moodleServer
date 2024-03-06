@@ -39,7 +39,7 @@ const jobSchema = mongoose.Schema({
         required: true
     },
     status:{
-        type:String,
+        type:Number,
         required:true,
         default:1,
     },
