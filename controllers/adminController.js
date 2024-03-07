@@ -64,8 +64,26 @@ const addJobpost = async (req, res) => {
 };
 
 
+const getSingleJobdata =  async (req, res)=>{
+  try {
+    const jobId = req.query.jobId
+
+    const job = await JOBS.findOne({_id:jobId })
+    if (!job) {
+      return res. status(400).json({message: "job not found"})
+    }
+    res.status(200).json(job)
+    console.log();
+    
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    res.status(500).json({ message: 'Internal server error' });
+    
+  }
+}
 
 
 
 
-module.exports = {GetUser, addJobpost };
+
+module.exports = {GetUser, addJobpost, getSingleJobdata };
