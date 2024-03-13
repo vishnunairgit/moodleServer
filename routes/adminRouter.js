@@ -11,7 +11,7 @@ var router = express.Router();
 
 router.post('/addJobpost', adminAuth, addJobpost)
 
-router.get('/GetUser',  GetUser)
+router.get('/GetUser',adminAuth, GetUser)
 router.get('/getSingleJobdata', adminAuth, getSingleJobdata)
 
 

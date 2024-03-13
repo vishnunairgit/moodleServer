@@ -33,7 +33,7 @@ const addJobpost = async (req, res) => {
             openings,
             date,
             Requirements,
-            Jobdescription,
+            // Jobdescription,
             status,
         } = req.body;
 
@@ -53,7 +53,7 @@ const addJobpost = async (req, res) => {
             openings,
             date,
             Requirements,
-            Jobdescription,
+            // Jobdescription,
         }).save();
 
         res.status(201).json({ message: 'job added successful' });
@@ -73,7 +73,7 @@ const getSingleJobdata =  async (req, res)=>{
       return res. status(400).json({message: "job not found"})
     }
     res.status(200).json(job)
-    console.log();
+    console.log(job,"----------------job-------------------");
     
   } catch (error) {
     console.error('Error fetching user:', error);
@@ -81,9 +81,6 @@ const getSingleJobdata =  async (req, res)=>{
     
   }
 }
-
-
-
 
 
 module.exports = {GetUser, addJobpost, getSingleJobdata };

@@ -34,10 +34,10 @@ const jobSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    Jobdescription: {
-        type: String,
-        required: true
-    },
+    // Jobdescription: {
+    //     type: String,
+    //     required: true
+    // },
     status:{
         type:Number,
         required:true,
