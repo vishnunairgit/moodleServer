@@ -13,4 +13,19 @@ const getallJob = async (req, res) =>{
   }
 }
 
-module.exports = { getallJob };
+const getAllStudentJob = async (req, res) =>{
+  try {
+    const studentalljob = await JOBS.find()
+    res.status(200).json(studentalljob)
+
+  } catch (error) {
+    
+  }
+}
+
+
+
+
+
+
+module.exports = { getallJob, getAllStudentJob };
