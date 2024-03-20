@@ -24,8 +24,19 @@ const doSignUp = async (req, res) => {
       CompanyName: req.body.CompanyName,
       registrationNumber: req.body.registrationNumber,
       email: req.body.email,
+
+      Address: req.body.Address,
+      website: req.body.website,
+      LinkedIn: req.body.LinkedIn,
+      Industry: req.body.Industry,
+      Incorporationdate: req.body.Incorporationdate,
+      about: req.body.about,
+      
+
+      
       phonenumber: req.body.phonenumber,
       password: hash,
+
     });
 
     res.status(200).json({ message: "signUp successful" });
@@ -74,4 +85,57 @@ const doLogin = async (req, res) => {
   }
 };
 
-module.exports = { doSignUp, doLogin }
+// const GetEditcompany = async (req, res) => {
+//   try {
+//     const {
+//         CompanyName,
+//         registrationNumber,
+//         email,
+//         phonenumber,
+//         Address,
+//         website,
+//         LinkedIn,
+//         Industry,
+//         Incorporationdate,
+//         about,
+//         // Ensure you're securely handling passwords - hash before storing
+//         password,
+//         confirmPassword,
+//     } = req.query;
+
+//     const {
+//       logoUpload,
+//       imageUpload,
+//     } = req.files;
+
+//     const logo = logoUpload ? logoUpload[0].filename : '';
+//     const image = imageUpload ? imageUpload[0].filename : '';
+//     // Assuming _id is coming from somewhere in your request (e.g., req.params, req.body)
+//     const _id = req.params.id || req.body.id;
+
+//     // Await the asynchronous operation to complete
+//     const updatedCompany = await USERS.findByIdAndUpdate(_id, {
+//       CompanyName,
+//       registrationNumber,
+//       email,
+//       phonenumber,
+//       Address,
+//       website,
+//       LinkedIn,
+//       Industry,
+//       Incorporationdate,
+//       about,
+//       logo,
+//       image
+//       // It's crucial to handle passwords securely
+//     }, { new: true }); // Returns the updated document
+
+//     // Respond with the updated company details
+//     res.status(200).json(updatedCompany);
+//   } catch (error) {
+//     console.error(error); // Log the error for server-side debugging
+//     res.status(501).json({ message: 'Internal Server Error', error: error.message });
+//   }
+// };
+
+module.exports = { doSignUp, doLogin  }
