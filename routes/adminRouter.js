@@ -1,7 +1,8 @@
 var express = require('express');
-const { addJobpost, GetUser , getSingleJobdata, GetEditcompany } = require('../controllers/adminController');
-const { adminAuth } = require('../middlewares/Authorization');
 const multer = require('multer');
+
+const { addJobpost, GetUser , getSingleJobdata, GetEditcompany, editJob, Deletejob } = require('../controllers/adminController');
+const { adminAuth } = require('../middlewares/Authorization');
 
 // const { userAuth } = require('../middlewares/Authorization');
 var router = express.Router();
@@ -25,16 +26,18 @@ const upload = multer({ storage: fileStorage }).fields([
 
 
 
-router.post('/addJobpost', adminAuth, addJobpost)
-router.get('/GetUser',adminAuth, GetUser)
-router.get('/getSingleJobdata', adminAuth, getSingleJobdata)
-router.post('/GetEditcompany', adminAuth, upload , GetEditcompany)
+router.post('/addJobpost', adminAuth, upload, addJobpost)
+router.get('/GetUser',adminAuth,upload, GetUser)
+router.get('/getSingleJobdata', adminAuth,upload, getSingleJobdata)
+router.post('/GetEditcompany/', adminAuth, upload , GetEditcompany)
+router.post('/editJob/', adminAuth, upload , editJob)
+router.delete('/Deletejob/', adminAuth, upload, Deletejob)
 
 
 
-// GetEditcompany
 
 
+// editJob
 
 
 module.exports = router;

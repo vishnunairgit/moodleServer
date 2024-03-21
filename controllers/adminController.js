@@ -1,3 +1,4 @@
+const jobs = require('../Models/jobModels');
 const JOBS = require('../Models/jobModels');
 
 const USER = require('../Models/userModels')
@@ -6,6 +7,7 @@ const USER = require('../Models/userModels')
 const GetUser = async (req, res) => {
   try {
     const companyId = req.query.userId;
+    // console.log(companyId,'----------companyId-----------------');
 
     const user = await USER.findOne({ _id: companyId });
 
@@ -38,7 +40,7 @@ const addJobpost = async (req, res) => {
 
 
     console.log(req.body, '----jon basic information----');
-    // console.log(req.files, '-----filedata');
+    console.log(req.files, '-----filedata');
 
 
     await JOBS({
@@ -82,35 +84,37 @@ const getSingleJobdata = async (req, res) => {
 }
 
 const GetEditcompany = async (req, res) => {
+
   try {
-    const {
-        CompanyName,
-        registrationNumber,
-        email,
-        phonenumber,
-        Address,
-        website,
-        LinkedIn,
-        Industry,
-        Incorporationdate,
-        about,
-        // Ensure you're securely handling passwords - hash before storing
-        password,
-        confirmPassword,
-    } = req.query;
+    const { id } = req.params;
 
+    // Extracting request data
     const {
-      logoUpload,
-      imageUpload,
-    } = req.files;
+      _id,
+      CompanyName,
+      registrationNumber,
+      email,
+      phonenumber,
+      Address,
+      website,
+      LinkedIn,
+      Industry,
+      Incorporationdate,
+      about,
+      password, // Ensure hashing if updated
+      confirmPassword, // Ensure client-side match before submission
+    } = req.body;
 
+
+    const { logoUpload, imageUpload } = req.files;
     const logo = logoUpload ? logoUpload[0].filename : '';
     const image = imageUpload ? imageUpload[0].filename : '';
-    // Assuming _id is coming from somewhere in your request (e.g., req.params, req.body)
-    const _id = req.params.id || req.body.id;
+    
+    
 
-    // Await the asynchronous operation to complete
-    const updatedCompany = await USER.findByIdAndUpdate(_id, {
+
+
+    const updatedCompany = await USER.findByIdAndUpdate( _id, {
       CompanyName,
       registrationNumber,
       email,
@@ -123,17 +127,80 @@ const GetEditcompany = async (req, res) => {
       about,
       logo,
       image
-      // It's crucial to handle passwords securely
-    }, { new: true }); // Returns the updated document
+      // Exclude or securely handle password updates
+    }, { new: true });
 
-    // Respond with the updated company details
+    // Check the result and respond accordingly
+    if (!updatedCompany) {
+      return res.status(404).json({ message: 'Company not found or update failed' });
+    }
+
     res.status(200).json(updatedCompany);
+
   } catch (error) {
-    console.error(error); // Log the error for server-side debugging
-    res.status(501).json({ message: 'Internal Server Error', error: error.message });
+    console.error(error); // Server-side debugging
+    res.status(500).json({ message: 'Internal Server Error', error: error.message });
   }
 };
 
 
+const editJob = async (req, res) => {
 
-module.exports = { GetUser, addJobpost, getSingleJobdata, GetEditcompany };
+  try {
+    const {
+      _id,
+      JobTitle,
+      Experience,
+      location,
+      qualifications,
+      employmentType,
+      openings,
+      status,
+      date,
+      Requirements,
+    }= req.body;
+
+    JOBS.findByIdAndUpdate(_id, {
+      JobTitle,
+      Experience,
+      location,
+      qualifications,
+      employmentType,
+      openings,
+      status,
+      date,
+      Requirements,
+    }, {new:true})
+    .then((updatedjob)=>{
+      res.status(200).json({ updatedjob });
+    })
+
+    
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Internal Server Error' });
+    
+  }
+}
+
+const Deletejob = async(req, res) =>{
+
+  try {
+    const {jobId} = req.query;
+    const Deletejob = await JOBS.findByIdAndDelete(jobId)
+
+    if (!Deletejob) {
+      return res.status(404).json({ error: 'job not found' });
+    }
+    res.status(200).json({ message: 'job deleted successfully' });
+
+    
+  } catch (error) {
+    onsole.error('Error deleting job:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    
+  }
+
+}
+
+module.exports = { GetUser, addJobpost, getSingleJobdata, GetEditcompany, editJob, Deletejob };

@@ -36,7 +36,7 @@ const userSchema=mongoose.Schema({
         type:String
     },
     Incorporationdate:{
-        type:Date
+        type: Date,
     },
     about:{
         type:String

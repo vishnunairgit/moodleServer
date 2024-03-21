@@ -38,11 +38,12 @@ const jobSchema = mongoose.Schema({
     //     type: String,
     //     required: true
     // },
-    status:{
-        type:Number,
-        required:true,
-        default:1,
+    status: {
+        type: String,
+        required: true,
+        default: "active", // Use "active" or "inactive"
     },
+    
     CreatedBy:{
         type:mongoose.Types.ObjectId,
         ref:'user'
