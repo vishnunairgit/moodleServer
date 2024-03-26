@@ -1,4 +1,4 @@
-const jobs = require('../Models/jobModels');
+// const jobs = require('../Models/jobModels');
 const JOBS = require('../Models/jobModels');
 
 const USER = require('../Models/userModels')
@@ -65,32 +65,49 @@ const addJobpost = async (req, res) => {
 };
 
 
+// const getSingleJobdata = async (req, res) => {
+//   try {
+//     const jobId = req.query.jobId
+//     const job = await JOBS.findOne({ _id: jobId }).populate('CreatedBy', 'name email'); // Adjust 'name email' based on the User model's fields you want to include
+
+//     // const job = await JOBS.findOne({ _id: jobId })
+//     if (!job) {
+//       return res.status(400).json({ message: "job not found" })
+//     }
+//     res.status(200).json(job)
+//     console.log(job, "----------------job-------------------");
+
+//   } catch (error) {
+//     console.error('Error fetching user:', error);
+//     res.status(500).json({ message: 'Internal server error' });
+
+//   }
+// }
+
 const getSingleJobdata = async (req, res) => {
   try {
-    const jobId = req.query.jobId
+    const jobId = req.query.jobId; // Or req.params.jobId if you're using route parameters
 
-    const job = await JOBS.findOne({ _id: jobId })
+    // Populate the 'CreatedBy' field to get user details
+    const job = await JOBS.findOne({ _id: jobId }).populate('CreatedBy', 'name email'); // Adjust 'name email' based on the User model's fields you want to include
+
     if (!job) {
-      return res.status(400).json({ message: "job not found" })
+      return res.status(400).json({ message: "Job not found" });
     }
-    res.status(200).json(job)
+
+    res.status(200).json(job);
     console.log(job, "----------------job-------------------");
 
   } catch (error) {
-    console.error('Error fetching user:', error);
+    console.error('Error fetching job:', error);
     res.status(500).json({ message: 'Internal server error' });
-
   }
-}
+};
 
-const GetEditcompany = async (req, res) => {
-
+const Editcompany = async (req, res) => {
+  const { id } = req.query;
   try {
-    const { id } = req.params;
-
-    // Extracting request data
     const {
-      _id,
       CompanyName,
       registrationNumber,
       email,
@@ -101,20 +118,10 @@ const GetEditcompany = async (req, res) => {
       Industry,
       Incorporationdate,
       about,
-      password, // Ensure hashing if updated
-      confirmPassword, // Ensure client-side match before submission
     } = req.body;
 
-
-    const { logoUpload, imageUpload } = req.files;
-    const logo = logoUpload ? logoUpload[0].filename : '';
-    const image = imageUpload ? imageUpload[0].filename : '';
-    
-    
-
-
-
-    const updatedCompany = await USER.findByIdAndUpdate( _id, {
+    // Initialize the updates object with fields other than file uploads
+    let updates = {
       CompanyName,
       registrationNumber,
       email,
@@ -125,23 +132,32 @@ const GetEditcompany = async (req, res) => {
       Industry,
       Incorporationdate,
       about,
-      logo,
-      image
       // Exclude or securely handle password updates
-    }, { new: true });
+    };
 
-    // Check the result and respond accordingly
+    const { logo, image } = req.files;
+
+    if (logo && logo.length) {
+      updates.logoUpload = logo[0].filename;
+    }
+    if (image && image.length) {
+      updates.imageUpload = image[0].filename;
+    }
+
+    const updatedCompany = await USER.findByIdAndUpdate(id, updates, { new: true });
+
     if (!updatedCompany) {
       return res.status(404).json({ message: 'Company not found or update failed' });
     }
 
     res.status(200).json(updatedCompany);
-
   } catch (error) {
-    console.error(error); // Server-side debugging
+    console.error(error);
     res.status(500).json({ message: 'Internal Server Error', error: error.message });
   }
 };
+
+
 
 
 const editJob = async (req, res) => {
@@ -160,7 +176,7 @@ const editJob = async (req, res) => {
       Requirements,
     }= req.body;
 
-    JOBS.findByIdAndUpdate(_id, {
+    const updatedjob = await JOBS.findByIdAndUpdate(_id, {
       JobTitle,
       Experience,
       location,
@@ -171,16 +187,18 @@ const editJob = async (req, res) => {
       date,
       Requirements,
     }, {new:true})
-    .then((updatedjob)=>{
-      res.status(200).json({ updatedjob });
-    })
+     // Check the result and respond accordingly
+     if (!updatedjob) {
+      return res.status(404).json({ message: 'updatedjob not found or update failed' });
+    }
 
-    
+    res.status(200).json(updatedjob);
+
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: 'Internal Server Error' });
-    
+    console.error(error); // Server-side debugging
+    res.status(500).json({ message: 'Internal Server Error', error: error.message });
   }
+
 }
 
 const Deletejob = async(req, res) =>{
@@ -203,4 +221,4 @@ const Deletejob = async(req, res) =>{
 
 }
 
-module.exports = { GetUser, addJobpost, getSingleJobdata, GetEditcompany, editJob, Deletejob };
+module.exports = { GetUser, addJobpost, getSingleJobdata, Editcompany, editJob, Deletejob };

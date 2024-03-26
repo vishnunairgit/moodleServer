@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 const jobSchema = mongoose.Schema({
  
-
     JobTitle: {
         type: String,
         required: true
@@ -46,9 +45,9 @@ const jobSchema = mongoose.Schema({
     
     CreatedBy:{
         type:mongoose.Types.ObjectId,
-        ref:'user'
+        // type: mongoose.Schema.Types.ObjectId,
+        ref:'users'
     }
-   
 
 })
 

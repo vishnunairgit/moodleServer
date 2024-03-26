@@ -1,11 +1,6 @@
 const mongoose=require ('mongoose')
 const userSchema=mongoose.Schema({
-    // userID: {
-    //      type: String,
-    //      required:true,
-    // },
-
-    
+  
     CompanyName:{
         type:String,
         required:true
@@ -17,7 +12,8 @@ const userSchema=mongoose.Schema({
     email:{
         type:String,
         required:true,
-        unique:true
+        unique:true,
+        match: [/.+\@.+\..+/, 'Please fill a valid email address'],
     },
     phonenumber:{
         type:Number,
@@ -36,7 +32,7 @@ const userSchema=mongoose.Schema({
         type:String
     },
     Incorporationdate:{
-        type: Date,
+        type:Date,
     },
     about:{
         type:String
@@ -48,13 +44,12 @@ const userSchema=mongoose.Schema({
         type:String
     },
 
-
-
-
     role:{
         type:Number,
         required:true,
-        default:1
+        default:1,
+        enum: [1, 2, 3] // Example: 1 for User, 2 for Admin, 3 for Super Admin
+
     },
 
     password:{
