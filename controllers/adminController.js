@@ -84,6 +84,34 @@ const addJobpost = async (req, res) => {
 //   }
 // }
 
+
+
+const getallJob = async (req, res) =>{
+  try {
+   const userId = req.userId;
+
+    const allJob = await JOBS.find({CreatedBy:userId});
+      res.status(200).json(allJob);
+    
+  } catch (error) {
+    console.log(error);
+    
+  }
+}
+
+const getAllJob = async (req, res) =>{
+  try {
+
+    const studentalljob = await JOBS.find()
+    res.status(200).json(studentalljob)
+
+  } catch (error) {
+    onsole.log(error);
+    res.status(500).json({ message: "An error occurred while fetching the job data" });
+    
+  }
+}
+
 const getSingleJobdata = async (req, res) => {
   try {
     const jobId = req.query.jobId; // Or req.params.jobId if you're using route parameters
@@ -221,4 +249,4 @@ const Deletejob = async(req, res) =>{
 
 }
 
-module.exports = { GetUser, addJobpost, getSingleJobdata, Editcompany, editJob, Deletejob };
+module.exports = { GetUser, addJobpost,getallJob, getSingleJobdata, Editcompany, editJob, Deletejob };
